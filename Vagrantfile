@@ -33,7 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     mesos1.vm.hostname="mesos1"
 
     # workaround from: https://github.com/mitchellh/vagrant/issues/5973
-    mesos1.vm.provision "shell", inline: "sudo mkdir /etc/salt"
+    mesos1.vm.provision "shell", inline: "sudo mkdir -p /etc/salt"
     mesos1.vm.provision "shell", inline: "sudo cp /vagrant/salt/minion.conf /etc/salt/minion"
 
     # salt provider
@@ -43,6 +43,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       salt.bootstrap_options = "-P"
       salt.verbose = true
       salt.colorize = true
+      salt.log_level = "warning"
 
       salt.pillar({
         "host" => {
